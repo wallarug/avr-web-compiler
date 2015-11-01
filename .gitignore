@@ -1,0 +1,7 @@
+*.pyc
+*.iml
+*.xml
+*.zip
+*.log
+*.pot
+__pycache__/
