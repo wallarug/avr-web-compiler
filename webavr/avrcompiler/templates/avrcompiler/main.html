@@ -1,0 +1,40 @@
+{% extends "avrcompiler/base.html" %}
+
+{% block creatives_content %}
+
+<div class="container">
+    <div class="col-md-12">
+            <h2 class="ap-title"> Compiler for AVR</h2>
+    </div>
+    {% if message %}
+        <div class="col-md-10 col-md-offset-2">
+         <div class="col-sm-10 alert alert-info">
+	    {% for line in message %}
+		{{ line }} <br />
+	    {% endfor %}
+         </div>
+        </div>
+        {% endif %}
+    {% if errormessage %}
+        <div class="col-md-10 col-md-offset-2">
+         <div class="col-sm-10 alert alert-danger">
+            {{ errormessage }}
+         </div>
+        </div>
+        {% endif %}
+	<div class="container">
+		<form class="form-group" action="/" method="post">
+		{% csrf_token %}
+			<label for="code">Comment:</label>
+  			<textarea class="form-control" rows="15" id="code" name="code">{{ code }}</textarea>
+			<button type="submit" class="btn btn-default btn-sm">Submit code to PASTA</button>
+		</form>
+	</div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
