@@ -19,7 +19,7 @@ apt-get install python-virtualenv
 pip install mysqlpython
 pip install django-braces
 pip install django-class-based-auth-views
-pip install serial
+pip install pyserial
 ```
 
 
