@@ -1,37 +1,32 @@
 ;;; Data definitions go here
 .section .data
-
+	pair11: .byte 12   ; First number of first pair 12
+	pair12: .byte 23   ; Second number of first pair 23
+	pair21: .byte 55   ; First number of second pair 55
+	pair22: .byte 123  ; Second number of second pair 122
 ;;; Code definition goes here
 .section .text
 	.global asm_function
 
 asm_function:
-	LDI R16, 9
-	LDI R17, 12
-	LDI R18, 15
-	MUL R16, R16
-	;;ROR R18
-	MOV R16, R0 ;;result of mul in R16
-	MUL R17, R17
-	MOV R17, R0 ;;result of mul in R17
-	MUL R18, R18
-	MOV R18, R0 ;;result of mul in R18
-	ADD R16, R17 ;;result in R16
-	CP R18, R16
+	LDS R28,pair11
+	LDS R29,pair12
+	LDS R30,pair21
+	LDS R31,pair22
 	
-	BREQ true
-	BRNE false
-	true:	
-		LDI R16, 1
-		MOV R24, R16
-		CLR R25
-		call print_integer
-		ret
-	false:	
-		LDI R16, 0
-		MOV R24, R16
-		CLR R25
-		call print_integer
-		ret
+	ADD R28,R29
+	ADD R30,R31
+	
+	CP R28,R30
+	BREQ equals
+	
+	LDI R24,0
+	CLR R25
+	CALL print_integer
+	ret
+equals:
+	LDI R24,1
+	CLR R25
+	CALL print_integer
 	ret
 .end

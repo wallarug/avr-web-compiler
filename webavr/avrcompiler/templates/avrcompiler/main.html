@@ -3,9 +3,25 @@
 {% block creatives_content %}
 
 <div class="container">
-    <div class="col-md-12">
+    <div class="container">
             <h2 class="ap-title"> Compiler for AVR</h2>
-    </div>
+   </div>
+	<div class="container">
+		<div class="well">
+			<form class="form-inline" action="/files/" method="POST">
+				{% csrf_token %}
+				<label for="file">File Name:</label>
+				<input type="text" class="form-control" id="file" name="file">{{ file }}</input>
+				<select class="form-control" id="type" name="type">
+                   			<option value="0">SAVE</option>
+                   			<option value="1" selected>LOAD</option>
+        			</select>
+				<input type="hidden" id="action" name="action" value="file">
+				<button type="submit" class="btn btn-default btn-sm">GO</button>
+			</form>
+		</div>
+	</div>
+   <div class="container">
     {% if message %}
         <div class="col-md-10 col-md-offset-2">
          <div class="col-sm-10 alert alert-info">
@@ -22,13 +38,19 @@
          </div>
         </div>
         {% endif %}
+   </div>
+
 	<div class="container">
-		<form class="form-group" action="/" method="post">
+		<form class="form-group" action="/" method="POST">
 		{% csrf_token %}
-			<label for="code">Comment:</label>
+			<label for="code">AVR Code</label>
   			<textarea class="form-control" rows="15" id="code" name="code">{{ code }}</textarea>
 			<button type="submit" class="btn btn-default btn-sm">Submit code to PASTA</button>
 		</form>
+	</div>
+	<div class="container">
+		<label for="console">Console</label>
+		<textarea class="form-control" rows="5" id="console" name="console">{% if console %}{{ console }} {% endif %}</textarea>
 	</div>
     </div>
 
