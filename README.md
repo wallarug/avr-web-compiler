@@ -1,4 +1,4 @@
-# **Programs to install** #
+# Required Software via apt-get  #
 
 ```
 #!Bash
@@ -11,8 +11,8 @@ apt-get install python-virtualenv
 ```
 
 
-# Programs to install in virtual env #
-
+# Programs to install in virtual env  #
+**NOTE:**  if you download this repo, you get a preconfigured virtualenv with all the required packages.
 ```
 #!Bash
 
@@ -40,13 +40,17 @@ Include /etc/phpmyadmin/apache.conf
 ```
 #!bash
 
+# to set up initially (DO NOT DO IF YOU CLONE)
 virtualenv venv
+# to run virtual env
 source venv/bin/activate
+# to close virtual env
 deactivate
 ```
 
 # Configure Django to use MySQL #
 
+**settings.py**
 ```
 #!python
 
