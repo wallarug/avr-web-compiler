@@ -53,11 +53,10 @@ deactivate
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'avr_compiler',
-        'USER': 'avrweb',
-        'PASSWORD': '12a3v4r5w6eb',
+        'NAME': '<db_name>',
+        'USER': '<db_user>',
+        'PASSWORD': '<db_pass>',
         'HOSTS': 'localhost',
     }
 }
 ```
-
