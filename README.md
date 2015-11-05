@@ -78,3 +78,21 @@ cd 4.4.21
 make
 make install
 ```
+
+**Edit apache2.conf**
+
+```
+#!bash
+# Django Configuration for WSGI mod
+WSGIScriptAlias /avr /home/django/avr-web-complier/webavr/webavr/wsgi.py
+WSGIPythonPath /home/django/avr-web-compiler/webavr:/home/django/avr-web-compiler/venv/lib/python2.7/site-packages
+
+<Directory /home/django/avr-web-compiler/webavr>
+  <Files wsgi.py>
+    Order deny,allow
+    Allow from all
+  </Files>
+</Directory>
+
+
+```
