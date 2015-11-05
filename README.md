@@ -64,3 +64,16 @@ DATABASES = {
     }
 }
 ```
+
+# Configuring Apache2 to run Server #
+
+```
+#!bash
+
+apt-get install apache2 apache2-prefork-dev
+wget https://github.com/GrahamDumpleton/mod_wsgi/archive/4.4.21.tar.gz
+tar xzvf 4.4.21.tar.gz
+cd 4.4.21
+./configure
+make
+```
