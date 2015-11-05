@@ -76,4 +76,5 @@ tar xzvf 4.4.21.tar.gz
 cd 4.4.21
 ./configure
 make
+make install
 ```
