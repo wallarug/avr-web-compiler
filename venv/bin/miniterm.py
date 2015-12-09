@@ -1,4 +1,4 @@
-#!/home/avr-compiler/avr-web-compiler/venv/bin/python
+#!/home/pi/repos/avr-web-compiler/venv/bin/python
 
 # Very simple serial terminal
 # (C)2002-2011 Chris Liechti <cliechti@gmx.net>
