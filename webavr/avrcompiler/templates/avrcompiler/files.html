@@ -20,7 +20,7 @@
                     <tr>
                         <td> {{ item.name }}</td>
                         <td class="text-center">
-                            <a href="/{{ item.id }}/" class="btn">
+                            <a href="{% url 'files' %}{{ item.id }}/" class="btn">
                                 <i class="glyphicon glyphicon-edit"></i>
                             </a>
                         </td>

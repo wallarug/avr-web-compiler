@@ -22,15 +22,37 @@ class CompileView(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
         data = {}
-        print kwargs
-        print args
+        try:
+            errors = request.session['errors']
+            data['errormessage'] = errors
+        except KeyError:
+            pass
+        try:
+            sesh = request.session['program']
+            data['code'] = sesh['code']
+            data['name'] = sesh['name']
+            data['id'] = sesh['id']
+            del request.session['program']
+        except KeyError:
+            program = AssemblyProgram.objects.get(name='template')
+            data['name'] = "template"
+            data['code'] = program.getCode()
+            data['id'] = None
         return render_to_response(self.template_name, RequestContext(request, data))
-            #return HttpResponse("G'day, What you are trying to do is not right.")
 
     def post(self, request, *args, **kwargs):
         data = {}
-        code = self.request.POST.get('code')
+        code = request.POST.get('code')
+        name = request.POST.get('progname')
+        id = request.POST.get('progid')
+
+        print name
+        print id
+
         data['code'] = code
+        data['name'] = name
+        data['id'] = id
+        data['console'] = ''
 
         code_file = open('avrcompiler/program.s', 'w')
         myFile = File(code_file)
@@ -63,21 +85,37 @@ class FileListView(LoginRequiredMixin, View):
         return render(request, self.template_name, {'files': context,})
 
 class FileView(LoginRequiredMixin, View):
-    template_name = ''
+    template_name = 'avrcompiler/save_file.html'
 
     def get(self, request, *args, **kwargs):
         # get file and pass to 'compiler' to render
-        context = {}
-        program = AssemblyProgram.objects.filter(id=kwargs['pk'])
-        # render on page
-        return CompileView(request=request,kwargs={'file': program})
-
-       # return render(request, self.template_name, {'files': context,})
+        context = {'id': '', 'code': '', 'name':'',}
+        program = AssemblyProgram.objects.get(id=kwargs['pk'])
+        if program:
+            context['id'] = kwargs['pk']
+            context['code'] = program.getCode()
+            context['name'] = program.getName()
+            request.session['program'] = context
+        # redirect to page
+        return  HttpResponseRedirect(reverse('compiler', args=(),kwargs={}));
 
     def post(self, request, *args, **kwargs):
+        # TODO:  Fix this!!
         # get fields
+        data = {}
+        code = request.POST.get('code')
+        name = request.POST.get('progname')
+        id = request.POST.get('progid')
 
+        if id is None:
+            # create new object
+            program = AssemblyProgram.create(name=name,code=code,user=request.user)
+        else:
+            program = AssemblyProgram.objects.get(name=name,user=request.user).save()
         # render, successfully updated
+        request.session['id'] = program.getId()
+        request.session['name'] = name
+        request.session['code'] = code
         return HttpResponseRedirect("/")
 
 
