@@ -25,6 +25,19 @@ class CompileView(LoginRequiredMixin,View):
         try:
             errors = request.session['errors']
             data['errormessage'] = errors
+            del request.session['errors']
+        except KeyError:
+            pass
+        try:
+            message = request.session['message']
+            data['message'] = message
+            del request.session['message']
+        except KeyError:
+            pass
+        try:
+            success = request.session['successmessage']
+            data['successmessage'] = success
+            del request.session['successmessage']
         except KeyError:
             pass
         try:
@@ -37,7 +50,7 @@ class CompileView(LoginRequiredMixin,View):
             program = AssemblyProgram.objects.get(name='template')
             data['name'] = "template"
             data['code'] = program.getCode()
-            data['id'] = None
+            data['id'] = 'None'
         return render_to_response(self.template_name, RequestContext(request, data))
 
     def post(self, request, *args, **kwargs):
@@ -61,6 +74,10 @@ class CompileView(LoginRequiredMixin,View):
 
         message = subprocess.check_output(["bash", "avrcompiler/compile_upload.sh", "avrcompiler/program.s"])
         arr = message.split('\n')
+        if "# ERROR: " in message:
+            data['errormessage'] = "Something went wrong, check bottom for details."
+        else:
+            data['successmessage'] = "Program successfully compiled and uploaded!"
         data['message'] = arr
         try:
             ser = serial.Serial("/dev/ttyACM0", 9600, timeout=3)
@@ -106,17 +123,33 @@ class FileView(LoginRequiredMixin, View):
         code = request.POST.get('code')
         name = request.POST.get('progname')
         id = request.POST.get('progid')
+        print id
 
-        if id is None:
+        if id == 'None':
             # create new object
-            program = AssemblyProgram.create(name=name,code=code,user=request.user)
+            print "create"
+            program = AssemblyProgram.objects.create(code=code,name=name,user=request.user)
         else:
-            program = AssemblyProgram.objects.get(name=name,user=request.user).save()
+            print "save"
+            program = AssemblyProgram.objects.get(id=id)
+            if program.getName() == name:
+                # everything checks out, save updated version of code.
+                program.save(code=code)
+            else:
+                # create instead because name has changed
+                program = AssemblyProgram.objects.create(code=code,name=name,user=request.user)
+
         # render, successfully updated
-        request.session['id'] = program.getId()
-        request.session['name'] = name
-        request.session['code'] = code
-        return HttpResponseRedirect("/")
+        if program:
+            context = {}
+            context['id'] = program.getId()
+            context['code'] = program.getCode()
+            context['name'] = program.getName()
+            request.session['program'] = context
+            request.session['successmessage'] = "File Successfully Saved!"
+        # redirect to page
+        return  HttpResponseRedirect(reverse('compiler', args=(),kwargs={}));
+        #return HttpResponseRedirect("/")
 
 
 ## THEIFED FRoM AUDIENCE PRECISION
