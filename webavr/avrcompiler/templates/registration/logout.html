@@ -1,15 +1,8 @@
 {% extends "avrcompiler/base.html" %}
 {% load staticfiles%}
 
-{% block creatives_navlinks %}
-{% endblock %}
-
 {% block creatives_content %}
-<div class="col-md-12  alert alert-info text-center">
-You have been logged out.
-    <br> Click <a href=" {% url 'login' %}"> Here </a> to Login again.
-</div>
 
-{% endblock %}
-{% block creatives_scripts %}
+{% include 'authsystem/logout.html' %}
+
 {% endblock %}
