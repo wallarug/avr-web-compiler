@@ -15,8 +15,6 @@ Including another URLconf
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import url
-<<<<<<< HEAD:webavr/authsystem/urls.py
-
 from views import LoginView, LogoutView, RegisterView, ChangePasswordView
 
 urlpatterns = [
@@ -24,10 +22,4 @@ urlpatterns = [
     url(r'logout/$', LogoutView.as_view(),  name='logout'),
     url(r'register/$', RegisterView.as_view(),  name='register'),
     url(r'password/$', ChangePasswordView.as_view(),  name='change password'),
-=======
-from django.contrib import admin
-
-urlpatterns = [
-    url(r'^admin/', admin.site.urls),
->>>>>>> 1df3c1dc3071a3fd5e0533c994489afcc873c387:venv/lib/python2.7/site-packages/django/conf/project_template/project_name/urls.py
 ]
