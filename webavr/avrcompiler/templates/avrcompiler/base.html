@@ -45,7 +45,34 @@
               </ul>
 
               <ul class="nav navbar-nav pull-right" >
+<<<<<<< HEAD
                   <li> {% include 'authsystem/auth-navbar.html' %} </li>
+=======
+                  <li>
+                        {% if user.is_authenticated %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Logged in as <strong>{{ user.username }}</strong>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{% url 'logout' %}">Log Out</a>
+                            </li>
+                        </ul>
+                        {% else %}
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Menu
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{% url 'login' %}">Sign in</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'register' %}">Register</a>
+                            </li>
+                        </ul>
+                        {% endif %}
+                    </li>
+>>>>>>> 1df3c1dc3071a3fd5e0533c994489afcc873c387
 
               </ul>
 

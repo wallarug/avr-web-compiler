@@ -1,0 +1,43 @@
+{% extends "avrcompiler/base.html" %}
+
+{% block creatives_content %}
+
+<div class="container">
+    <div class="container">
+            <h2 class="ap-title"> Files</h2>
+   </div>
+
+	<div class="container">
+        {% if files %}
+        <table>
+            <thead>
+                <th> Name</th>
+                <th> Edit</th>
+                <th> Delete</th>
+            </thead>
+            <tbody>
+                {% for item in files %}
+                    <tr>
+                        <td> {{ item.name }}</td>
+                        <td class="text-center">
+                            <a href="{% url 'files' %}{{ item.id }}/" class="btn">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="file/{{ item.id }}/delete/" class="btn">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p> You do not have any files.  Why not get on the <a href="{% url 'compiler' %}">code base</a>?</p>
+        {% endif %}
+	</div>
+</div>
+
+
+{% endblock %}
