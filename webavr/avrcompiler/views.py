@@ -23,6 +23,7 @@ class CompileView(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
         data = {}
+        # Tidy this rubbish up ASAP!!
         try:
             errors = request.session['errors']
             data['errormessage'] = errors
@@ -48,10 +49,11 @@ class CompileView(LoginRequiredMixin,View):
             data['id'] = sesh['id']
             del request.session['program']
         except KeyError:
-            program = AssemblyProgram.objects.get(name='template')
-            data['name'] = "template"
-            data['code'] = program.getCode()
-            data['id'] = 'None'
+            # program = AssemblyProgram.objects.get(name='template')
+            # data['name'] = "template"
+            # data['code'] = program.getCode()
+            # data['id'] = 'None'
+            pass
         return render_to_response(self.template_name, RequestContext(request, data))
 
     def post(self, request, *args, **kwargs):
