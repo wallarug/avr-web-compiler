@@ -1,0 +1,51 @@
+
+<li>
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+My Details
+<span class="caret"></span></a>
+<ul class="dropdown-menu">
+    {% if user.member.level %}
+    <li><a href="{% url 'member detail' user.id %}">View</a></li>
+    <li><a href="{% url 'member update' user.id %}">Change</a></li>
+    {% else %}
+    <li><a href="{% url 'member create' %}">Become a volunteer!</a></li>
+    {% endif %}
+</ul>
+</li>
+
+{% if user.member.level == 'RD' %}
+    <li>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    Teams
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="{% url 'team list' %}">View</a></li>
+        <li><a href="{% url 'team create' %}">Add</a></li>
+    </ul>
+    </li>
+    {% endif %}
+{% if user.member.level == 'RD' or user.member.level == 'TC' %}
+    <li>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    Volunteers
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="{% url 'member list' %}">View</a></li>
+        <li><a href="{% url 'member admin create' %}">Add</a></li>
+        <li><a href="{% url 'member search' %}">Search</a></li>
+    </ul>
+    </li>
+{% endif %}
+{% if user.member.level and user.member.level != 'NT' %}
+    <li>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    Calenders
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="{% url 'calender' %}">Group A</a></li>
+        <li><a href="{% url 'calender' %}">Group B</a></li>
+        <li><a href="{% url 'calender' %}">Group C</a></li>
+        <li><a href="{% url 'calender' %}">Group D</a></li>
+    </ul>
+    </li>
+{% endif %}

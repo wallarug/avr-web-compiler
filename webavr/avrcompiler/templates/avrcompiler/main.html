@@ -6,57 +6,93 @@
     <div class="container">
             <h2 class="ap-title"> Compiler for AVR</h2>
    </div>
-	<div class="container">
-		<div class="well">
-			<form class="form-inline" action="/files/" method="POST">
-				{% csrf_token %}
-				<label for="file">File Name:</label>
-				<input type="text" class="form-control" id="file" name="file">{{ file }}</input>
-				<select class="form-control" id="type" name="type">
-                   			<option value="0">SAVE</option>
-                   			<option value="1" selected>LOAD</option>
-        			</select>
-				<input type="hidden" id="action" name="action" value="file">
-				<button type="submit" class="btn btn-default btn-sm">GO</button>
-			</form>
-		</div>
-	</div>
+	<!--<div class="container">-->
+		<!--<div class="well">-->
+			<!--<form class="form-inline" action="/files/" method="POST">-->
+				<!--{% csrf_token %}-->
+				<!--<label for="file">File Name:</label>-->
+				<!--<input type="text" class="form-control" id="file" name="file">{{ file }}</input>-->
+				<!--<select class="form-control" id="type" name="type">-->
+                   			<!--<option value="0">SAVE</option>-->
+                   			<!--<option value="1" selected>LOAD</option>-->
+        			<!--</select>-->
+				<!--<input type="hidden" id="action" name="action" value="file">-->
+				<!--<button type="submit" class="btn btn-default btn-sm">GO</button>-->
+			<!--</form>-->
+		<!--</div>-->
+	<!--</div>-->
    <div class="container">
-    {% if message %}
-        <div class="col-md-10 col-md-offset-2">
-         <div class="col-sm-10 alert alert-info">
-	    {% for line in message %}
-		{{ line }} <br />
-	    {% endfor %}
-         </div>
-        </div>
-        {% endif %}
     {% if errormessage %}
         <div class="col-md-10 col-md-offset-2">
          <div class="col-sm-10 alert alert-danger">
             {{ errormessage }}
          </div>
         </div>
-        {% endif %}
+    {% endif %}
+
+    {% if successmessage %}
+        <div class="col-md-10 col-md-offset-2">
+         <div class="col-sm-10 alert alert-success">
+	        {{ successmessage }}
+         </div>
+        </div>
+    {% endif %}
    </div>
 
 	<div class="container">
-		<form class="form-group" action="/" method="POST">
+		<form class="form-group" action="/" method="POST" id="mainForm">
 		{% csrf_token %}
-			<label for="code">AVR Code</label>
+            <label for="progname">AVR Code - </label>
+            <div class="input-group">
+                <input type="text" class="form-control" name="progname" id="progname" aria-describedby="basic-addon2" value="{{ name }}">
+                <span class="input-group-addon" id="basic-addon2">.s</span>
+            </div>
+            <br>
   			<textarea class="form-control" rows="15" id="code" name="code">{{ code }}</textarea>
-			<button type="submit" class="btn btn-default btn-sm">Submit code to PASTA</button>
+            <input type="hidden" id="progid" name="progid" value="{{ id }}">
+            <br>
+			<button type="submit" class="btn btn-default" value="PASTA">Submit code to PASTA</button>
+            <button onclick="doSave();" class="btn btn-default btn-sm navbar-right">Save</button>
+            <a href="{% url 'files' %}" class="btn btn-default btn-sm navbar-right"> View Files </a>
+            <!--<button type="submit" class="btn btn-default" value="SAVE">Save</button>-->
 		</form>
-	</div>
-	<div class="container">
+
+        <hr>
 		<label for="console">Console</label>
 		<textarea class="form-control" rows="5" id="console" name="console">{% if console %}{{ console }} {% endif %}</textarea>
-	</div>
+
     </div>
 
 
 </div>
+<hr>
+<div class="container">
+    {% if message %}
+        <div class="col-md-10 col-md-offset-2">
+         <div class="col-sm-10 alert alert-info">
+            {% for line in message %}
+                {{ line }} <br />
+            {% endfor %}
+         </div>
+        </div>
+    {% endif %}
+</div>
 
+<script>
+    function doPASTA()
+    {
+        form=document.getElementById('mainForm');
+        form.action="/";
+        form.submit();
+    }
+    function doSave()
+    {
+        form=document.getElementById('mainForm');
+        form.action="{% url 'file' %}";
+        form.submit();
+    }
+
+</script>
 
 {% endblock %}
 

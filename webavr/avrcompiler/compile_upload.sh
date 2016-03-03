@@ -56,7 +56,7 @@ if [ ! -e "avrcompiler/wrapper_uart.c" ]; then
     echo "#"
     echo "# ERROR: File wrapper_uart.c must be present in this folder."
     echo "#"
-    echo "# Dowload the file from the course notes"
+    echo "# Download the file from the course notes"
     echo "#"
     exit
 fi
@@ -155,8 +155,3 @@ if [ "$?" != 0 ]; then
 else
     echo "--Done!--"
 fi
-echo
-echo "#"
-echo "# Open the Serial Monitor in the IDE (Tools->Serial Monitor, "
-echo "# or Crtl-Shift-M) to see the data produced by your program".
-echo "#"
