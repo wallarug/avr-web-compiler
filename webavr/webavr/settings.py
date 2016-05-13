@@ -11,11 +11,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'avr_compiler',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'avr-compiler',
         'USER': 'avrweb',
         'PASSWORD': '12a3v4r5w6eb',
-        'HOSTS': 'localhost',
+        'HOST': '192.168.12.44',
+        'PORT': '5432'
     }
 }
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -47,12 +48,12 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = 'media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -65,7 +66,7 @@ MEDIA_URL = ''
 STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
-STATIC_ROOT = 'static'
+STATIC_ROOT = 'staticfiles/'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Additional locations of static files
@@ -124,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'avrcompiler',
     'authsystem',
+    'ccompiler',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

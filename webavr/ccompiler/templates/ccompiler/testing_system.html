@@ -1,0 +1,28 @@
+{% include 'ccompiler/base.html' %}
+
+
+{% block creatives_content %}
+
+{% if form.errors %}
+    <div class="col-md-12  alert alert-warning text-center">
+        There are issues present in this form. Please try again.
+    </div>
+    {% for error in form.errors.user %}
+        <div class="alert alert-danger">{{ error|escape }}</div>
+    {% endfor %}
+{% endif %}
+
+<h3 class="ap-title"> C Project </h3>
+<div class="container">
+    <form action="{{ request.path }}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+          <input type="submit" value="Submit">
+    </form>
+</div>
+
+<label for="console">Console</label>
+<textarea class="form-control" rows="5" id="console" name="console">{% if console %}{{ console }} {% endif %}</textarea>
+
+
+{% endblock %}
